@@ -1,4 +1,5 @@
 galaxy_info:
+  role_name: users
   author: staf wagemakers <staf@wagemakers.be>
   description: An ansible role to manage user and user files - files in the home directory -.
   license: license (BSD, MIT)
