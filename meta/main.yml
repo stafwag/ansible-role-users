@@ -31,7 +31,7 @@ galaxy_info:
     - name: OpenBSD
       versions:
         - all
-  galaxy_tags: []
+  galaxy_tags:
     - system
     - users
 dependencies: []
