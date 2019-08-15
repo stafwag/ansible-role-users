@@ -3,7 +3,7 @@ galaxy_info:
   description: An ansible role to manage user and user files - files in the home directory -.
   license: license (BSD, MIT)
   min_ansible_version: 2.4
-   platforms:
+  platforms:
     - name: EL
       versions:
         - all
