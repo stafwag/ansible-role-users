@@ -1,0 +1,56 @@
+- name: get the user homedir
+  getent:
+    database: passwd
+    key: "{{ user.name }}"
+
+- name: delete "{{ getent_passwd[user.name][4] }}//{{ user_file.path }}"
+  file:
+    path: "{{ getent_passwd[user.name][4] }}//{{ user_file.path }}"
+    backup: "{{ user_file.backup | default(omit) }}"
+    state: absent
+  when: 
+    - user_file.state is defined
+    - user_file.state == "absent"
+
+- name: create directory and update
+  block:
+    - name: check directory
+      stat:
+        path: "{{ getent_passwd[user.name][4] }}/{{ user_file.path | dirname }}"
+      register: dir_status
+
+    - name: create directory "{{ getent_passwd[user.name][4] }}/{{ user_file.path | dirname }}"
+      file:
+        path:  "{{ getent_passwd[user.name][4] }}/{{ user_file.path | dirname }}"
+        owner: "{{ user_file.owner | default(user.name) }}"
+        group: "{{ user_file.group | default(getent_passwd[user.name][2]) }}"
+        state: directory
+        mode: "{{ user_file.dir_mode | default (0700) }}"
+        recurse: "{{ user_file.dir_recurse | default(omit) }}"
+      when:
+        - dir_status.stat.exists == false
+        - user_file.dir_create|default(false) == true
+
+    - name: stat file
+      stat:
+        path: "{{ getent_passwd[user.name][4] }}/{{ user_file.path }}"
+      register: stat_user_file
+
+    - name: create file "{{ getent_passwd[user.name][4] }}/{{ user_file.path }}"
+      file:
+        path: "{{ getent_passwd[user.name][4] }}/{{ user_file.path }}"
+        state: touch
+      when: stat_user_file.stat.exists == false
+
+    - name: update
+      copy:
+        content: "{{ user_file.content | default(omit) }}"
+        dest: "{{ getent_passwd[user.name][4] }}/{{ user_file.path }}"
+        backup: "{{ user_file.backup | default(omit) }}"
+        mode: "{{ user_file.mode | default(0600) }}"
+        group: "{{ user_file.group | default(getent_passwd[user.name][2]) }}"
+        owner: "{{ user_file.owner | default(user.name) }}"
+      when: user_file.content is defined 
+
+  when: 
+    ( user_file.state is not defined ) or ( user_file.state == "present" )

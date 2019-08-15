@@ -1,0 +1,58 @@
+---
+# tasks file for users
+
+- name: set OS related variables
+  include_vars: '{{ item }}'
+  with_first_found:
+    - '{{ ansible_distribution }}-{{ ansible_distribution_major_version}}.yml'
+    - '{{ ansible_distribution }}.yml'
+    - '{{ ansible_os_family }}.yml'
+    - defaults.yml
+
+- name: add group 
+  group:
+    name: "{{ item.group }}"
+    state: "{{item.state }}"
+    gid: "{{item.gid | default(omit) }}"
+  when: item.group is defined
+  with_items: "{{ users | default([]) }}"
+
+- name: add user
+  user:
+    name: "{{ item.name }}"
+    uid: "{{item.uid | default(omit) }}"
+    append: "{{ item.append | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    groups: "{{ item.groups | default(omit) }}"
+    comment: "{{ item.comment | default(omit) }}"
+    password: "{{ item.password | default(omit) }}"
+    password_lock: "{{ item.password_lock | default(omit) }}"
+    state: "{{ item.state | default(omit) }}"
+    home: "{{ item.home | default(omit) }}"
+  with_items: "{{ users | default([]) }}"
+
+- name: update authorized keys
+  authorized_key:
+    user: "{{ item.0.name }}"
+    key: "{{ item.1.key }}"
+    state: "{{ item.1.state | default(omit) }}"
+    exclusive: "{{ item.1.exclusive | default(omit) }}"
+    key_options: "{{ item.1.key_options | default(omit) }}"
+  with_subelements:
+    - "{{ users | default([]) }}"
+    - ssh_authorized_keys
+    - skip_missing: yes
+
+- name: set up user files
+  include_tasks: "user_files.yml"
+  when: user.user_files is defined
+  with_items: "{{ users | default([]) }}"
+  loop_control:
+    loop_var: user
+
+- name: set up user lineinfiles
+  include_tasks: "user_lineinfiles.yml"
+  when: user.user_lineinfiles is defined
+  with_items: "{{ users | default([]) }}"
+  loop_control:
+    loop_var: user

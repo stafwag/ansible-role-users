@@ -1,0 +1,9 @@
+- name: get the user homedir
+  getent:
+    database: passwd
+    key: "{{ user.name }}"
+- name: update user file
+  include_tasks: "user_files/update_file.yml"
+  with_items: "{{ user.user_files | default([]) }}"
+  loop_control:
+    loop_var: user_file
