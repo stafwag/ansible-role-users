@@ -17,16 +17,16 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - all
-    - name: Suse
+    - name: opensuse
+      versions:
+        - all
+    - name: SLES
       versions:
         - all
     - name: Archlinux
       versions:
         - all
     - name: FreeBSD
-      versions:
-        - all
-    - name: NetBSD
       versions:
         - all
     - name: OpenBSD
