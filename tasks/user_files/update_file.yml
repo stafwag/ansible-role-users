@@ -8,7 +8,7 @@
     path: "{{ getent_passwd[user.name][4] }}//{{ user_file.path }}"
     backup: "{{ user_file.backup | default(omit) }}"
     state: absent
-  when: 
+  when:
     - user_file.state is defined
     - user_file.state == "absent"
 
@@ -28,8 +28,8 @@
         mode: "{{ user_file.dir_mode | default (0700) }}"
         recurse: "{{ user_file.dir_recurse | default(omit) }}"
       when:
-        - dir_status.stat.exists == false
-        - user_file.dir_create|default(false) == true
+        - not dir_status.stat.exists
+        - user_file.dir_create|default(false)
 
     - name: stat file
       stat:
@@ -40,7 +40,7 @@
       file:
         path: "{{ getent_passwd[user.name][4] }}/{{ user_file.path }}"
         state: touch
-      when: stat_user_file.stat.exists == false
+      when: not stat_user_file.stat.exists
 
     - name: update
       copy:
@@ -50,7 +50,7 @@
         mode: "{{ user_file.mode | default(0600) }}"
         group: "{{ user_file.group | default(getent_passwd[user.name][2]) }}"
         owner: "{{ user_file.owner | default(user.name) }}"
-      when: user_file.content is defined 
+      when: user_file.content is defined
 
-  when: 
+  when:
     ( user_file.state is not defined ) or ( user_file.state == "present" )

@@ -4,23 +4,23 @@
 - name: set OS related variables
   include_vars: '{{ item }}'
   with_first_found:
-    - '{{ ansible_distribution }}-{{ ansible_distribution_major_version}}.yml'
+    - '{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
     - '{{ ansible_distribution }}.yml'
     - '{{ ansible_os_family }}.yml'
     - defaults.yml
 
-- name: add group 
+- name: add group
   group:
     name: "{{ item.group }}"
-    state: "{{item.state }}"
-    gid: "{{item.gid | default(omit) }}"
+    state: "{{ item.state }}"
+    gid: "{{ item.gid | default(omit) }}"
   when: item.group is defined
   with_items: "{{ users | default([]) }}"
 
 - name: add user
   user:
     name: "{{ item.name }}"
-    uid: "{{item.uid | default(omit) }}"
+    uid: "{{ item.uid | default(omit) }}"
     append: "{{ item.append | default(omit) }}"
     group: "{{ item.group | default(omit) }}"
     groups: "{{ item.groups | default(omit) }}"

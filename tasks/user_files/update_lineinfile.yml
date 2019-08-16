@@ -6,7 +6,7 @@
 - name: update lineinfile
   lineinfile:
     path: "{{ getent_passwd[user.name][4] }}/{{ user_lineinfile.path }}"
-    regexp: "{{ user_lineinfile.regexp | default(omit) }}"  
+    regexp: "{{ user_lineinfile.regexp | default(omit) }}"
     state: "{{ user_lineinfile.state | default(omit) }}"
     line: "{{ user_lineinfile.line | default(omit) }}"
     backup: "{{ user_lineinfile.backup | default(omit) }}"
