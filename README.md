@@ -114,9 +114,9 @@ None
             state: present
           - name: ssh config.d/intern_config
             path: .ssh/config.d/intern_config
-            content: "{{lookup('file','files/intern_ssh_config') }}"
+            content: "{{ lookup('file','files/intern_ssh_config') }}"
             dir_create: true
-        user_inlinefiles:
+        user_lineinfiles:
           - name: include intern_config
             path: .ssh/config
             state: present
