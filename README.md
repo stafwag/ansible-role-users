@@ -47,7 +47,7 @@ If yes, add the user to the groups specified in groups. If no, user will only be
     * **dir_mode**: Default: 700. The permissions of the resulting directory.
     * **owner**: Name of the owner that should own the file/directory, as would be fed to chown.
     * **owner**: Name of the group that should own the file/directory, as would be fed to chown.
-  * **user_inlinefiles**: Array of user inlinefiles.
+  * **user_lineinfiles**: Array of user lineinfile.
     * **path**: path in the user home directoy. The home directory will be detected by getent_passwd
     * **regexp**: The regular expression to look for in every line of the file.
     * **line**: The line to insert/replace into the file.
