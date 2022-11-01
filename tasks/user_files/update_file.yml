@@ -47,7 +47,7 @@
         content: "{{ user_file.content | default(omit) }}"
         dest: "{{ getent_passwd[user.name][4] }}/{{ user_file.path }}"
         backup: "{{ user_file.backup | default(omit) }}"
-        mode: "{{ user_file.mode | default(0600) }}"
+        mode: "{{ user_file.mode | default('0600') }}"
         group: "{{ user_file.group | default(getent_passwd[user.name][2]) }}"
         owner: "{{ user_file.owner | default(user.name) }}"
       when: user_file.content is defined
