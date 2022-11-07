@@ -25,7 +25,7 @@
         owner: "{{ user_file.owner | default(user.name) }}"
         group: "{{ user_file.group | default(getent_passwd[user.name][2]) }}"
         state: directory
-        mode: "{{ user_file.dir_mode | default (0700) }}"
+        mode: "{{ user_file.dir_mode | default ('0700') }}"
         recurse: "{{ user_file.dir_recurse | default(omit) }}"
       when:
         - not dir_status.stat.exists

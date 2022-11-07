@@ -43,8 +43,8 @@ If yes, add the user to the groups specified in groups. If no, user will only be
     * **backup**: no (default) | yes. create a backup file.
     * **dir_create**: false (default) | true. 
     * **dir_recurse**: no (default) | yes create the directory recursively.
-    * **mode**: Default: 600. The permissions of the resulting file.
-    * **dir_mode**: Default: 700. The permissions of the resulting directory.
+    * **mode**: Default: '0600'. The permissions of the resulting file.
+    * **dir_mode**: Default: '0700'. The permissions of the resulting directory.
     * **owner**: Name of the owner that should own the file/directory, as would be fed to chown.
     * **owner**: Name of the group that should own the file/directory, as would be fed to chown.
   * **user_lineinfiles**: Array of user lineinfile.
@@ -57,6 +57,7 @@ If yes, add the user to the groups specified in groups. If no, user will only be
     * **dir_mode**: Default: 700. The permissions of the resulting directory.
     * **owner**: Name of the owner that should own the file/directory, as would be fed to chown.
     * **owner**: Name of the group that should own the file/directory, as would be fed to chown.
+    * **create**: Default: no. Create file if not exists
 
 ## Dependencies
 

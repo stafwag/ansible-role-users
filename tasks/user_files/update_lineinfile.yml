@@ -10,3 +10,4 @@
     state: "{{ user_lineinfile.state | default(omit) }}"
     line: "{{ user_lineinfile.line | default(omit) }}"
     backup: "{{ user_lineinfile.backup | default(omit) }}"
+    create: "{{ user_lineinfile.create | default(omit) }}"
