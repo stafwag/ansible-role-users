@@ -30,6 +30,7 @@
     password_lock: "{{ item.password_lock | default(omit) }}"
     state: "{{ item.state | default(omit) }}"
     home: "{{ item.home | default(omit) }}"
+    shell: "{{ item.shell | default(omit) }}"
   with_items: "{{ users | default([]) }}"
 
 - name: update authorized keys

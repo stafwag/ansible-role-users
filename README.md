@@ -31,6 +31,7 @@ If yes, add the user to the groups specified in groups. If no, user will only be
   * **home**: Optionally set the user's home directory.
   * **password**: Optionally set the user's password to this crypted value.
   * **password_lock**: no|yes lock password (ansible 2.6+)
+  * **shell**: Optionally, the user shell
   * **ssh_authorized_keys**: Array of the user ssh authorized keys
     * **key**: The ssh public key
     * **state**: absent | present (default) Whether the given key (with the given key_options) should or should not be in the file.
